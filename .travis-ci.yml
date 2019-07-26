@@ -1,0 +1,6 @@
+deploy:
+  provider: npm
+  email: info@webish.one
+  api_key: $AUTH_TOKEN
+  on:
+    tags: true
