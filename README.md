@@ -1,0 +1,1 @@
+# portainer-stack-updater
