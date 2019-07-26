@@ -1,2 +1,7 @@
 .vscode/
 docker-compose.yml
+.eslintrc
+.gitignore
+.eslintignore
+.travis.yml
+*-lock.json

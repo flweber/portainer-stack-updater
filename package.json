@@ -10,8 +10,12 @@
     "type": "git",
     "url": "https://github.com/flweber/portainer-stack-updater.git"
   },
-  "author": "Florian Weber",
-  "license": "ISC",
+  "author": {
+    "name": "Florian Weber",
+    "email": "info@webish.one",
+    "url": "https://flweber.github.io"
+  },
+  "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.15",
     "request": "^2.88.0"

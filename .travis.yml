@@ -1,9 +1,19 @@
 language: node_js
 node_js:
-  - "10"
+- "10"
+
 deploy:
-  script:
-  - echo $api_key > $HOME/.npmrc
-  - npm publish 
+  provider: script
+  script: "echo private=\
+            //registry.npmjs.org/:_authToken=${API_TOKEN} $HOME/.npmrc\
+             && npm publish"
+  skip_cleanup: true
   on:
     tags: true
+
+notifications:
+  email:
+    recipients:
+    - info@webish.one
+    on_success: change
+    on_failure: always
