@@ -4,7 +4,7 @@
   "description": "A small update tool for portainer stacks",
   "bin": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "npm install --save-dev && jest"
   },
   "repository": {
     "type": "git",

@@ -3,11 +3,8 @@ node_js:
 - "10"
 
 deploy:
-  provider: script
-  script: "echo private=\
-            //registry.npmjs.org/:_authToken=${API_TOKEN} $HOME/.npmrc\
-             && npm publish"
-  skip_cleanup: true
+  provider: npm
+  api_key: $API_TOKEN
   on:
     tags: true
 

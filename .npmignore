@@ -5,3 +5,4 @@ docker-compose.yml
 .eslintignore
 .travis.yml
 *-lock.json
+node_modules/
