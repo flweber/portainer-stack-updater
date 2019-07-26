@@ -1,5 +1,9 @@
+language: node_js
+node_js:
+  - "10"
 deploy:
-  provider: npm
-  email: info@webish.one
+  script:
+  - echo $api_key > $HOME/.npmrc
+  - npm publish 
   on:
     tags: true
