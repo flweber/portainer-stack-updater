@@ -24,5 +24,15 @@
     "eslint": "^6.1.0",
     "eslint-plugin-node": "9.1.0",
     "jest": "^24.8.0"
-  }
+  },
+  "keywords": [
+    "portainer",
+    "docker",
+    "docker-compose",
+    "deployment",
+    "stack",
+    "portainer deployment",
+    "portainer stack deployment",
+    "portainer cicd"
+  ]
 }

@@ -3,15 +3,21 @@ const request = require("request");
 const _ = require("lodash");
 const fs = require("fs");
 const path = require("path");
+const Script = require("./scripts");
 
-const args = {
-    env: process.argv[2],
-    project: process.argv[3],
-    portainersystem: process.argv[7] || `http://localhost:9001/api`,
-    user: process.argv[4],
-    password: process.argv[5],
-    compose: process.argv[6]
-};
+if(process.argv[2] === "help") {
+    Script.Help();
+}
+
+let args = undefined;
+
+try {
+    args = Script.Args(process.argv);
+} catch(err) {
+    console.error(err);
+    Script.Help();
+    process.exit(1);
+}
 
 request({
     method: "POST",
