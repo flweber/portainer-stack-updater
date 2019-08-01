@@ -1,6 +1,6 @@
 {
   "name": "portainer-update",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A small update tool for portainer stacks",
   "bin": "index.js",
   "scripts": {
@@ -15,8 +15,13 @@
     "email": "info@webish.one",
     "url": "https://flweber.github.io"
   },
+  "bugs": {
+    "url": "https://github.com/flweber/portainer-stack-updater/issues",
+    "email": "support@webish.one"
+  },
   "license": "MIT",
   "dependencies": {
+    "arg": "^4.1.1",
     "lodash": "^4.17.15",
     "request": "^2.88.0"
   },

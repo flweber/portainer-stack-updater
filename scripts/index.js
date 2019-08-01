@@ -2,6 +2,7 @@ module.exports = {
     Auth: require("./auth"),
     Deploy: require("./deployStack"),
     Update: require("./updateStack"),
-    Args: require("./transformArgs"),
-    Help: require("./help")
+    Help: require("./help"),
+    GetStackByName: require("./getStacks"),
+    CheckUrl: require("./checkURL")
 };

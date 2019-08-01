@@ -1,62 +1,72 @@
 #!/usr/bin/env node
-const request = require("request");
-const _ = require("lodash");
-const fs = require("fs");
-const path = require("path");
+const arg = require("arg");
 const Script = require("./scripts");
 
-if(process.argv[2] === "help") {
-    Script.Help();
-}
+const execute = async () => {
+    
+    let args = undefined;
 
-let args = undefined;
-
-try {
-    args = Script.Args(process.argv);
-} catch(err) {
-    console.error(err);
-    Script.Help();
-    process.exit(1);
-}
-
-request({
-    method: "POST",
-    uri: args.portainersystem + "/auth",
-    headers: {
-        "content-type": "applocation/json"
-    },
-    body: JSON.stringify({
-        Username: args.user,
-        Password: args.password
-    })
-}, (err, res, auth) => {
-    if(err) return console.error(err);
-    auth = JSON.parse(auth);
-    request({
-        method: "GET",
-        uri: args.portainersystem + "/stacks",
-        headers: {
-            "content-type": "applocation/json",
-            "Authorization": "Bearer " + auth.jwt
-        }
-    }, (err, res, stacks) => {
-        if(err) return console.error(err);
-        stacks = JSON.parse(stacks);
-        const stackID = _.find(stacks, ["Name", args.project]).Id;
-        const compose = fs.readFileSync(path.resolve(args.compose), {encoding: "utf8"});
-        request({
-            method: "PUT",
-            uri: `${args.portainersystem}/stacks/${stackID}?endpointId=1`,
-            headers: {
-                "content-type": "applocation/json",
-                "Authorization": "Bearer " + auth.jwt
-            },
-            body: JSON.stringify({
-                StackFileContent: compose
-            })
-        }, (err, res, body) => {
-            if(err) return console.error(err);
-            console.log(body);
+    try {
+        args = arg({
+            "--help": Boolean,
+            "--env": String,
+            "--project": String,
+            "--portainersystem": String,
+            "--user": String,
+            "--password": String,
+            "--compose": String,
+            "--endpoint": String,
+            "-h": "--help",
+            "-e": "--env",
+            "-p": "--project",
+            "-s": "--portainersystem",
+            "-u": "--user",
+            "-f": "--compose"
         });
-    });
-});
+    } catch(err) {
+        console.error(err);
+        Script.Help(1);
+    }
+
+    if(args["--help"]) {
+        Script.Help();
+    }
+    
+    const url = Script.CheckUrl(args["--portainersystem"]);
+
+    if(!args["--endpoint"]) args["--endpoint"] = "1";
+
+    console.info(`Authenticating against ${url}`);
+    const auth = await Script.Auth(args["--user"], args["--password"], url);
+    
+    let stackID = undefined;
+    let deploy = false;
+
+    try {
+        console.info(`Check if ${args["--project"]} already exists`);
+        stackID = await Script.GetStackByName(auth.jwt, url, args["--project"]);
+    } catch(err) {
+        deploy = true;
+    }
+
+    let stack = undefined;
+
+    try {
+        if(deploy) {
+            console.info(`Deploy ${args["--project"]} as new project`);
+            stack = await Script.Deploy(auth.jwt, url, args["--project"], args["--endpoint"], args["--compose"]);
+        } else  {
+            console.info(`Updating ${args["--project"]}...`);
+            stack = await Script.Update(auth.jwt, url, stackID, args["--endpoint"], args["--compose"]);
+        }
+    } catch(err) {
+        console.error(err);
+        process.exit(1);
+    }
+
+    console.info(JSON.stringify(stack));
+    process.exit(0);
+
+};
+
+execute();
