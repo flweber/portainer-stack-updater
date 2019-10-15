@@ -6,3 +6,6 @@ docker-compose.yml
 .travis.yml
 *-lock.json
 node_modules/
+.npmrc
+.travis.yml
+Jenkinsfile
