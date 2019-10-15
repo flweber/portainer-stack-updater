@@ -24,7 +24,7 @@ pipeline {
             }
         }
         stage('Deploy alpha') {
-            when { branch 'master' }
+            when { branch 'develop' }
             steps {
                 withCredentials([file(credentialsId: '3bede204-9776-4ed3-98a5-dc6cef958b28', variable: 'NPM_FILE')]) {
                     sh 'npm --userconfig=$NPM_FILE publish --access public --tag alpha'
