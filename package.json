@@ -1,5 +1,5 @@
 {
-  "name": "@flweber/portainer-update",
+  "name": "portainer-update",
   "version": "2.1.0",
   "description": "A small update tool for portainer stacks",
   "bin": "scripts/cli.js",
