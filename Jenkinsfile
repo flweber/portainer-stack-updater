@@ -9,20 +9,26 @@ pipeline {
         }
         stage('Deploy production') {
             when { buildingTag() }
-            withCredentials([file(credentialsId: '0a45fe2b-022d-436b-a9c3-9bd053e9866f', variable: 'NPM_FILE')]) {
-                sh 'npm --userconfig=$NPM_FILE publish --access public'
+            steps {
+                withCredentials([file(credentialsId: '3bede204-9776-4ed3-98a5-dc6cef958b28', variable: 'NPM_FILE')]) {
+                    sh 'npm --userconfig=$NPM_FILE publish --access public'
+                }
             }
         }
         stage('Deploy beta') {
             when { branch 'master' }
-            withCredentials([file(credentialsId: '0a45fe2b-022d-436b-a9c3-9bd053e9866f', variable: 'NPM_FILE')]) {
-                sh 'npm --userconfig=$NPM_FILE publish --access public --tag beta'
+            steps {    
+                withCredentials([file(credentialsId: '3bede204-9776-4ed3-98a5-dc6cef958b28', variable: 'NPM_FILE')]) {
+                    sh 'npm --userconfig=$NPM_FILE publish --access public --tag beta'
+                }
             }
         }
         stage('Deploy alpha') {
             when { branch 'master' }
-            withCredentials([file(credentialsId: '0a45fe2b-022d-436b-a9c3-9bd053e9866f', variable: 'NPM_FILE')]) {
-                sh 'npm --userconfig=$NPM_FILE publish --access public --tag alpha'
+            steps {
+                withCredentials([file(credentialsId: '3bede204-9776-4ed3-98a5-dc6cef958b28', variable: 'NPM_FILE')]) {
+                    sh 'npm --userconfig=$NPM_FILE publish --access public --tag alpha'
+                }
             }
         }
     }
