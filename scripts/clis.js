@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const arg = require("arg");
-const Script = require("./scripts");
+const Script = require(".");
 
 const execute = async () => {
     
