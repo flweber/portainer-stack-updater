@@ -11,6 +11,7 @@ pipeline {
             when { buildingTag() }
             steps {
                 withCredentials([file(credentialsId: '3bede204-9776-4ed3-98a5-dc6cef958b28', variable: 'NPM_FILE')]) {
+					sh 'npm version $BRANCH_NAME'
                     sh 'npm --userconfig=$NPM_FILE publish --access public'
                 }
             }
@@ -19,7 +20,7 @@ pipeline {
             when { branch 'master' }
             steps {    
                 withCredentials([file(credentialsId: '3bede204-9776-4ed3-98a5-dc6cef958b28', variable: 'NPM_FILE')]) {
-		    sh 'npm --no-git-tag-version version prerelease --preid=$BUILD_NUMBER'
+		            sh 'npm --no-git-tag-version version prerelease --preid=beta-b.$BUILD_NUMBER'
                     sh 'npm --userconfig=$NPM_FILE publish --access public --tag beta'
                 }
             }
@@ -28,7 +29,7 @@ pipeline {
             when { branch 'develop' }
             steps {
                 withCredentials([file(credentialsId: '3bede204-9776-4ed3-98a5-dc6cef958b28', variable: 'NPM_FILE')]) {
-		    sh 'npm --no-git-tag-version version prerelease --preid=$BUILD_NUMBER'
+		    sh 'npm --no-git-tag-version version prerelease --preid=alpha-b.$BUILD_NUMBER'
                     sh 'npm --userconfig=$NPM_FILE publish --access public --tag alpha'
                 }
             }
