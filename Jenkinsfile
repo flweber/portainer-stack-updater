@@ -19,8 +19,7 @@ pipeline {
             when { branch 'master' }
             steps {    
                 withCredentials([file(credentialsId: '3bede204-9776-4ed3-98a5-dc6cef958b28', variable: 'NPM_FILE')]) {
-					sh 'npm version $(cat package.json | grep version | head -1 | awk -F: "{ print $2 }" | sed "s/[",]//g" | tr -d
- "[[:space:]]")-b'
+		    sh 'npm version $(cat package.json | grep version | head -1 | awk -F: "{ print $2 }" | sed "s/[",]//g" | tr -d "[[:space:]]")-b'
                     sh 'npm --userconfig=$NPM_FILE publish --access public --tag beta'
                 }
             }
@@ -29,8 +28,7 @@ pipeline {
             when { branch 'develop' }
             steps {
                 withCredentials([file(credentialsId: '3bede204-9776-4ed3-98a5-dc6cef958b28', variable: 'NPM_FILE')]) {
-					sh 'npm version $(cat package.json | grep version | head -1 | awk -F: "{ print $2 }" | sed "s/[",]//g" | tr -d
- "[[:space:]]")-a'
+		    sh 'npm version $(cat package.json | grep version | head -1 | awk -F: "{ print $2 }" | sed "s/[",]//g" | tr -d "[[:space:]]")-a'
                     sh 'npm --userconfig=$NPM_FILE publish --access public --tag alpha'
                 }
             }
