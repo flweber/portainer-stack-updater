@@ -1,6 +1,6 @@
 {
   "name": "portainer-update",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "A small update tool for portainer stacks",
   "bin": "scripts/cli.js",
   "main": "scripts/index.js",
@@ -42,6 +42,9 @@
     "stack",
     "portainer deployment",
     "portainer stack deployment",
-    "portainer cicd"
+    "portainer cicd",
+	"portainer api",
+	"portainer api client",
+	"portainer client"
   ]
 }
